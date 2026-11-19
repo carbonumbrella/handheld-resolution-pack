@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
     Universal 1600x1000 & 1536x960 Resolution Installer + Automatic ClawTweaks Patcher
-    Supports: MSI Claw (Claw 8 AI+, Claw 7 AI+, Claw A1M, Claw A8) and other 16:10 panels.
+    Supports: MSI Claw (Claw 8 AI+, Claw 7 AI+, Claw A1M) and other 16:10 panels.
     Requires Administrator privileges (will auto-prompt UAC if needed).
 #>
 
