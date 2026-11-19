@@ -14,7 +14,8 @@ $ErrorActionPreference = "Stop"
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
     Write-Host "Requesting Administrator privileges..." -ForegroundColor Yellow
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
+    $argv = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$PSCommandPath`"")
+    Start-Process powershell.exe -Verb RunAs -ArgumentList $argv
     exit
 }
 
