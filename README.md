@@ -25,7 +25,6 @@
 | Claw 8 AI+ (A2VM, Intel Lunar Lake) | 2-е | Проверено | Панель CSW PN8007QB1-2, DisplayID 2.0 VRR 48-120 Гц |
 | Claw 7 AI+ (A2VM, Intel Lunar Lake) | 2-е | Поддерживается | Та же платформа, панель 16:10 |
 | Claw A1M (Intel Meteor Lake) | 1-е | Поддерживается | Панель 16:10 |
-| Claw A8 (AMD Ryzen Z2 Extreme) | 3-е | Поддерживается | Панель 16:10 |
 
 ## Состав пакета
 
