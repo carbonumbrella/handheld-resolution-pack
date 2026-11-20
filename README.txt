@@ -1,40 +1,40 @@
-ИНСТРУКЦИЯ ПО ДОБАВЛЕНИЮ РАЗРЕШЕНИЙ 1600x1000 И 1536x960 ДЛЯ MSI CLAW
-(MSI Claw 8 AI+, Claw 7 AI+, Claw A1M с экранами 16:10)
+MSI CLAW RESOLUTION PACK: 1600x1000 & 1536x960 INSTALLATION GUIDE
+(Supports MSI Claw 8 AI+, Claw 7 AI+, Claw A1M with 16:10 displays)
 
-ЗАЧЕМ ЭТО НУЖНО:
-На экранах 16:10 стандартные промежуточные режимы драйвера (1680x1050 и 1440x900) имеют нерегулярные коэффициенты масштабирования (~1.143x и ~1.333x), что приводит к погрешностям интерполяции и размытию при апскейлинге.
-Пакет добавляет в систему две математически точные альтернативы:
-- 1600x1000 (1000p, кратность ровно 1.20x): точная альтернатива для 1050p, снижает нагрузку на 30.5% и сохраняет четкость картинки на уровне нативного 1200p.
-- 1536x960 (960p, кратность ровно 1.25x / 80%): точная альтернатива для 900p, снижает нагрузку на 36% и дает заметно более четкую реконструкцию текстур апскейлерами.
-Оба разрешения добавляются параллельно, сохраняя родные пропорции 16:10 без черных полос и искажений.
+WHY THIS IS NEEDED:
+On 16:10 handheld screens, standard intermediate resolutions (1680x1050 and 1440x900) have irregular scaling ratios (~1.143x and ~1.333x), causing interpolation blur when running temporal upscalers (XeSS, FSR, TAAU).
+This pack adds two mathematically calibrated alternatives:
+- 1600x1000 (1000p, exact 1.20x multiplier): Direct alternative to 1050p, reduces GPU load by 30.5% while preserving native 1200p clarity.
+- 1536x960 (960p, exact 1.25x / 80% multiplier): Direct alternative to 900p, reduces GPU load by 36% and delivers noticeably sharper texture reconstruction.
+Both modes preserve 16:10 aspect ratio and Variable Refresh Rate (VRR 48-120 Hz).
 
-СОСТАВ АРХИВА:
+ARCHIVE STRUCTURE:
 
-1. Папка [1_Universal_Auto] (РЕКОМЕНДУЕТСЯ):
-   - Run_As_Admin.cmd: быстрый запуск от имени администратора в один клик.
-   - auto_add_1536x960.ps1: единый комплексный скрипт. Считывает заводской EDID активного дисплея, внедряет 1600x1000 и 1536x960 @ 120 Гц и 60 Гц, обновляет контрольную сумму, перезапускает видеодрайвер. Сразу после этого автоматически проверяет наличие виджета ClawTweaks: если хелпер найден, создает резервную копию и добавляет новые режимы в меню переключения виджета.
-   - auto_restore_original.ps1: скрипт полного отката, возвращающий заводской EDID и оригинальный хелпер ClawTweaks.
-   - Mono.Cecil.dll и restart64.exe: автономные библиотеки, необходимые для работы скрипта без интернета.
+1. Folder [1_Universal_Auto] (RECOMMENDED):
+   - Run_As_Admin.cmd: Fast one-click administrator launch.
+   - auto_add_1536x960.ps1: Universal installer script. Reads factory EDID, injects 1600x1000 and 1536x960 @ 120Hz and 60Hz, updates checksums, restarts graphics driver, and patches the ClawTweaks Xbox Game Bar widget if present.
+   - auto_restore_original.ps1: Complete rollback script restoring factory EDID and original ClawTweaks helper.
+   - Mono.Cecil.dll & restart64.exe: Offline utility binaries.
 
-2. Папка [2_MSI_Claw_Dedicated]:
-   - Готовые файлы специально для экрана MSI Claw 8 AI+ (панель CSW0801 / PN8007QB1-2).
-   - apply_custom_resolutions.ps1 / Run_As_Admin.cmd: применение режимов 1600x1000 и 1536x960 для Claw в один клик.
-   - apply_custom_resolutions.reg: файл реестра для ручного импорта.
-   - restore_original_claw.ps1 и restore_original_claw.reg: файлы отката.
-   - edid_custom.bin и edid_original.bin: дампы EDID с сохранением блока DisplayID 2.0 (VRR 48-120 Гц).
+2. Folder [2_MSI_Claw_Dedicated]:
+   - Pre-built files for the MSI Claw 8 AI+ panel (CSW0801 / PN8007QB1-2).
+   - apply_custom_resolutions.ps1 / Run_As_Admin.cmd: One-click installer.
+   - apply_custom_resolutions.reg: Windows registry script for manual import.
+   - restore_original_claw.ps1 & restore_original_claw.reg: Rollback scripts.
+   - edid_custom.bin & edid_original.bin: EDID dumps with DisplayID 2.0 (VRR 48-120 Hz).
 
-3. Папка [3_CRU_Utility]:
-   - Полный комплект утилиты Custom Resolution Utility 1.5.2 (CRU.exe, restart64.exe, reset-all.exe) для ручной настройки.
+3. Folder [3_CRU_Utility]:
+   - Custom Resolution Utility 1.5.2 suite (CRU.exe, restart64.exe, reset-all.exe).
 
-4. Папка [4_ClawTweaks_Widget_Patch]:
-   - Автономный патчер для виджета ClawTweaks (Xbox Game Bar), если требуется пропатчить только хелпер отдельно.
+4. Folder [4_ClawTweaks_Widget_Patch]:
+   - Standalone patcher for ClawTweaks Xbox Game Bar widget.
 
-БЫСТРЫЙ СТАРТ:
-1. Распакуйте архив на консоли.
-2. Откройте папку 1_Universal_Auto.
-3. Запустите двойным кликом Run_As_Admin.cmd (или правой кнопкой мыши по auto_add_1536x960.ps1 -> Выполнить с помощью PowerShell).
-4. Подтвердите запрос UAC.
-5. Экран мигнет на 1 секунду при перезапуске видеодрайвера. Разрешения 1600x1000 и 1536x960 станут доступны в Windows, в играх и в виджете ClawTweaks.
+QUICK START:
+1. Extract the archive on your handheld.
+2. Open folder 1_Universal_Auto.
+3. Double-click Run_As_Admin.cmd (or right-click auto_add_1536x960.ps1 -> Run with PowerShell).
+4. Accept the UAC prompt.
+5. The screen will blink for one second as the graphics driver restarts. 1600x1000 and 1536x960 will immediately appear in Windows, games, and ClawTweaks.
 
-КАК СДЕЛАТЬ ОТКАТ:
-- Запустите auto_restore_original.ps1 из папки 1_Universal_Auto, либо запустите reset-all.exe из папки 3_CRU_Utility и затем restart64.exe.
+HOW TO ROLL BACK:
+- Run auto_restore_original.ps1 in folder 1_Universal_Auto, or run reset-all.exe in folder 3_CRU_Utility and restart via restart64.exe.

@@ -1,63 +1,65 @@
+[English](README.md) | [Русский](README_RU.md)
+
+> **[Download Latest Release (ZIP Asset)](https://github.com/carbonumbrella/handheld-resolution-pack/releases/latest/download/Claw_Resolution_1536x960_Pack.zip)** | **[Release Notes & Files](https://github.com/carbonumbrella/handheld-resolution-pack/releases/latest)**
+
 # MSI Claw Resolution Pack (1600x1000 & 1536x960)
 
 [![release](https://img.shields.io/github/v/release/carbonumbrella/handheld-resolution-pack?include_prereleases&label=release)](https://github.com/carbonumbrella/handheld-resolution-pack/releases)
 
-**[Скачать последнюю версию (Claw_Resolution_1536x960_Pack.zip)](https://github.com/carbonumbrella/handheld-resolution-pack/releases)**
+Automated utility package to add custom 16:10 intermediate resolutions (1600x1000 and 1536x960) for MSI Claw handheld consoles with native VRR 48 to 120 Hz support.
 
-Пакет добавления промежуточных разрешений 1600x1000 и 1536x960 для портативных консолей MSI Claw с экранами 16:10.
+## Why This is Needed
 
-## Зачем это нужно
+On 16:10 displays, standard intermediate driver modes (1680x1050 and 1440x900) use non-integer scaling ratios (~1.143x and ~1.333x). Fractional grids introduce interpolation artifacts and text blurring when temporal upscalers (Intel XeSS, AMD FSR, TAAU) reconstruct frames.
 
-На экранах 16:10 стандартные промежуточные режимы видеодрайвера (1680x1050 и 1440x900) имеют нерегулярные коэффициенты масштабирования (~1.143x и ~1.333x). Дробная сетка приводит к погрешностям интерполяции и дополнительному размытию мелких шрифтов при работе темпоральных апскейлеров (Intel XeSS, AMD FSR).
+This package injects two mathematically calibrated alternatives into the display stack:
+- **1600x1000 (1000p, exact 1.20x multiplier):** Precise alternative to 1050p. Eliminates fractional grid sampling errors, cuts GPU load by 30.5%, and preserves perceived sharpness at near-native 1200p quality.
+- **1536x960 (960p, exact 1.25x / 80% multiplier):** Precise alternative to 900p. Represents exactly 80% of native width and height. Reduces GPU load by 36% and delivers noticeably sharper texture reconstruction in upscalers.
+- Both resolutions are injected simultaneously, maintaining the native 16:10 aspect ratio, 120 Hz refresh rate, and Variable Refresh Rate (VRR 48 to 120 Hz) via DisplayID 2.0 blocks.
 
-Пакет добавляет в систему две математически выверенные альтернативы:
-- **1600x1000 (1000p, кратность ровно 1.20x):** точная альтернатива для 1050p. Исключает дробную погрешность сэмплирования, снижает нагрузку на видеочип на 30.5% и сохраняет четкость картинки на уровне нативного 1200p.
-- **1536x960 (960p, кратность ровно 1.25x / 80%):** точная альтернатива для 900p. Составляет ровно 80% от нативного разрешения по ширине и высоте. Снижает нагрузку на 36% и дает заметно более четкую реконструкцию текстур апскейлерами.
-- Оба разрешения добавляются одновременно, сохраняя пропорции 16:10, частоту 120 Гц и переменную частоту VRR (48-120 Гц) через блок DisplayID 2.0.
+## Compatibility
 
-## Совместимость
-
-| Модель | Поколение | Статус | Примечание |
+| Model | Generation | Status | Notes |
 |---|---|---|---|
-| Claw 8 AI+ (A2VM, Intel Lunar Lake) | 2-е | Проверено | Панель CSW PN8007QB1-2, DisplayID 2.0 VRR 48-120 Гц |
-| Claw 7 AI+ (A2VM, Intel Lunar Lake) | 2-е | Поддерживается | Та же платформа, панель 16:10 |
-| Claw A1M (Intel Meteor Lake) | 1-е | Поддерживается | Панель 16:10 |
+| Claw 8 AI+ (A2VM, Intel Lunar Lake) | Gen 2 | Verified | Panel CSW PN8007QB1-2, DisplayID 2.0 VRR 48-120 Hz |
+| Claw 7 AI+ (A2VM, Intel Lunar Lake) | Gen 2 | Supported | Same platform, 16:10 display |
+| Claw A1M (Intel Meteor Lake) | Gen 1 | Supported | 16:10 display |
 
-## Состав пакета
+## Package Contents
 
-1. **1_Universal_Auto (Рекомендуется):**
-   - `Run_As_Admin.cmd`: быстрый запуск с правами администратора в один клик.
-   - `auto_add_1536x960.ps1`: комплексный скрипт. Считывает заводской EDID активного экрана, внедряет 1600x1000 и 1536x960 @ 120 Гц и 60 Гц, обновляет контрольную сумму, перезапускает видеодрайвер. Проверяет наличие виджета ClawTweaks в Xbox Game Bar, создает бэкап и добавляет новые режимы в меню быстрого переключения.
-   - `auto_restore_original.ps1`: скрипт полного отката, возвращающий заводской EDID и оригинальный хелпер ClawTweaks.
-   - `Mono.Cecil.dll`, `restart64.exe`: библиотеки для автономной работы без интернета.
+1. **1_Universal_Auto (Recommended):**
+   - `Run_As_Admin.cmd`: One-click elevated launcher.
+   - `auto_add_1536x960.ps1`: Automated installer script. Reads factory EDID from the active panel, injects 1600x1000 and 1536x960 @ 120 Hz and 60 Hz, recalculates checksums, and restarts the graphics driver. Automatically detects ClawTweaks in Xbox Game Bar, creates a backup, and registers new resolutions into the quick menu.
+   - `auto_restore_original.ps1`: One-click rollback script, restoring factory EDID and the original ClawTweaks helper.
+   - `Mono.Cecil.dll`, `restart64.exe`: Standalone libraries required for offline operation.
 
 2. **2_MSI_Claw_Dedicated:**
-   - Готовые файлы специально для дисплея MSI Claw 8 AI+ (панель CSW0801 / PN8007QB1-2).
-   - Скрипты применения и отката (`apply_custom_resolutions.ps1`, `restore_original_claw.ps1`).
-   - REG-файлы для ручного импорта в реестр Windows.
-   - Дампы EDID с сохранением блока DisplayID 2.0 (VRR 48-120 Гц).
+   - Dedicated pre-built files for the MSI Claw 8 AI+ display (CSW0801 / PN8007QB1-2).
+   - Deployment and rollback scripts (`apply_custom_resolutions.ps1`, `restore_original_claw.ps1`).
+   - REG files for manual Windows registry import.
+   - EDID binary dumps preserving the DisplayID 2.0 block (VRR 48 to 120 Hz).
 
 3. **3_CRU_Utility:**
-   - Комплект утилиты Custom Resolution Utility 1.5.2 (CRU.exe, restart64.exe, reset-all.exe) для ручной диагностики или аварийного сброса.
+   - Custom Resolution Utility 1.5.2 suite (CRU.exe, restart64.exe, reset-all.exe) for manual diagnostics or emergency reset.
 
 4. **4_ClawTweaks_Widget_Patch:**
-   - Автономный патчер хелпера ClawTweaks (Xbox Game Bar), если требуется обновить только меню переключения виджета без перезаписи EDID.
+   - Standalone ClawTweaks helper patcher (Xbox Game Bar) when patching the quick menu without modifying EDID.
 
-## Быстрый старт
+## Quick Start
 
-1. Скачайте архив `Claw_Resolution_1536x960_Pack.zip` из раздела [Releases](../../releases).
-2. Распакуйте архив на консоли.
-3. Откройте папку `1_Universal_Auto`.
-4. Запустите двойным кликом `Run_As_Admin.cmd`.
-5. Подтвердите запрос UAC.
-6. Экран мигнет на одну секунду при перезапуске видеодрайвера.
-7. Разрешения 1600x1000 и 1536x960 сразу станут доступны в Windows, внутри игр и в оверлее ClawTweaks.
+1. Download `Claw_Resolution_1536x960_Pack.zip` from the [Latest Release](https://github.com/carbonumbrella/handheld-resolution-pack/releases/latest).
+2. Extract the archive on the device.
+3. Open folder `1_Universal_Auto`.
+4. Double-click `Run_As_Admin.cmd`.
+5. Accept the UAC prompt.
+6. The display blinks for one second during graphics driver restart.
+7. Resolutions 1600x1000 and 1536x960 become immediately available in Windows Settings, in-game menus, and the ClawTweaks overlay.
 
-## Как сделать откат
+## How to Roll Back
 
-- Запустите `auto_restore_original.ps1` из папки `1_Universal_Auto`. Скрипт восстановит исходный EDID и оригинальный хелпер ClawTweaks.
-- Либо запустите `reset-all.exe` из папки `3_CRU_Utility` и перезапустите видеодрайвер через `restart64.exe`.
+- Run `auto_restore_original.ps1` from folder `1_Universal_Auto`. The script restores the factory EDID and original ClawTweaks binary.
+- Alternatively, run `reset-all.exe` from folder `3_CRU_Utility` and restart the graphics driver via `restart64.exe`.
 
-## Лицензия
+## License
 
-MIT License, см. [LICENSE](LICENSE).
+MIT License, see [LICENSE](LICENSE).
